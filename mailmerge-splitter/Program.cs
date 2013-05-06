@@ -14,6 +14,9 @@ namespace mailmerge_splitter
         [STAThread]
         static void Main()
         {
+            log4net.ILog log = log4net.LogManager.GetLogger(typeof(Program));
+            log.Info("Starting Program.Main()");
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
