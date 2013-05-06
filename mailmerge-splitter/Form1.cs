@@ -57,7 +57,29 @@ namespace mailmerge_splitter
         }
         public bool ContainPageBreak(DocumentFormat.OpenXml.Wordprocessing.Paragraph p)
         {
-            return p.Elements<DocumentFormat.OpenXml.Wordprocessing.Run>().FirstOrDefault(r => r.Elements<DocumentFormat.OpenXml.Wordprocessing.Break>().FirstOrDefault(b => b.Type == DocumentFormat.OpenXml.Wordprocessing.BreakValues.Page) != null) != null;
+            
+            if (p.InnerText.Contains("class Hello"))
+            {
+                System.Diagnostics.Debug.Assert(false);
+            }
+            
+
+            IEnumerable<DocumentFormat.OpenXml.Wordprocessing.Run> elements = p.Elements<DocumentFormat.OpenXml.Wordprocessing.Run>();
+            foreach (DocumentFormat.OpenXml.Wordprocessing.Run element in elements)
+            {
+                IEnumerable<DocumentFormat.OpenXml.Wordprocessing.Break> breaks = element.Elements<DocumentFormat.OpenXml.Wordprocessing.Break>();
+                if(breaks!=null && breaks.Count() > 0 && breaks.FirstOrDefault(b => b.Type == DocumentFormat.OpenXml.Wordprocessing.BreakValues.Page)!=null)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+
+            //DocumentFormat.OpenXml.Wordprocessing.Run run = elements.FirstOrDefault(r => r.Elements<DocumentFormat.OpenXml.Wordprocessing.Break>().FirstOrDefault(b => b != null && b.Type == DocumentFormat.OpenXml.Wordprocessing.BreakValues.Page) != null);
+            //if breaks != null
+
+            return p.Elements<DocumentFormat.OpenXml.Wordprocessing.Run>().FirstOrDefault(r => r.Elements<DocumentFormat.OpenXml.Wordprocessing.Break>().FirstOrDefault(b => b != null &&  b.Type == DocumentFormat.OpenXml.Wordprocessing.BreakValues.Page) != null) != null;
         }
         public bool ContainLastRenderedPageBreak(DocumentFormat.OpenXml.Wordprocessing.Paragraph p)
         {
@@ -79,7 +101,7 @@ namespace mailmerge_splitter
 
         private void btnOpenFileDialog_Click(object sender, EventArgs e)
         {
-            openFileDialog1.Filter = "Word Documents (*.doc/*.docx)|*.doc;*.docx|All files (*.*)|*.*";
+            openFileDialog1.Filter = "Word Documents (*.docx)|*.docx|All files (*.*)|*.*";
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 txtFilePath.Text = openFileDialog1.FileName;

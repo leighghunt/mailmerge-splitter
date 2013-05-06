@@ -35,10 +35,6 @@
             this.btnGo = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            // 
             // txtFilePath
             // 
             this.txtFilePath.Location = new System.Drawing.Point(45, 41);
